@@ -16,7 +16,7 @@ from Model_architecture_Code import Block, ResNet
 
 EMOTION_LABELS = ["kızgın maş", "Iıııı", "Korkmuş faşat", "Mutlu Bun", "Kederli Ferot", "Çok İlginçmişş"]
 CLASS_ORDER = ["angry", "disgusted", "fearful", "happy", "sad", "surprised"]
-WEIGHTS_PATH = Path("C:\\Users\\Dell\\Desktop\\emotionDemo\\Neconet_Weights3.pth")
+WEIGHTS_PATH = Path("emotionDemo/Neconet_Weights3.pth")
 IMAGE_SIZE = (64, 64)
 NORMALIZE_MEAN = 0.5
 NORMALIZE_STD = 0.5
