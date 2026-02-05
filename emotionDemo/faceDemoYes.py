@@ -8,7 +8,7 @@ from Model_architecture_Code import Block, ResNet
 from PIL import Image
 
 # --- AYARLAR ---
-EMOTION_LABELS = ["kızgın maş", "Iıııı", "Korkmuş faşat", "Mutlu Bun", "Kederli Ferot", "Çok İlginçmişş"]
+EMOTION_LABELS = ["angry", "disgusted", "scared", "happy", "sad", "surprised"]
 WEIGHTS_PATH = Path("emotionDemo/Neconet_Weights3.pth")
 IMAGE_SIZE = (64, 64)
 
@@ -28,9 +28,9 @@ def load_everything():
     fa = face_alignment.FaceAlignment(face_alignment.LandmarksType.TWO_D, flip_input=False, device="cpu")
     return model, fa, device
 
-st.set_page_config(page_title="Faraş Duygu Analizi", layout="centered")
-st.title(" Faraş Duygu Analizi ")
-st.write("Selfie Çek..")
+st.set_page_config(page_title="Duygu Analizi", layout="centered")
+st.title(" Duygu Analizi ")
+st.write("Selfie cek..")
 
 model, fa, device = load_everything()
 
