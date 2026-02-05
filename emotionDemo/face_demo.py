@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration, WebRtcMode
 import cv2
 import torch
 import numpy as np
@@ -73,7 +73,7 @@ st.write("Start'a bas ve kameraya bak..")
 
 webrtc_streamer(
     key="emotion-live",
-    mode=None, # VideoProcessor modunu otomatik seçer
+    mode=WebRtcMode.SENDRECV, # VideoProcessor modunu otomatik seçer
     rtc_configuration=RTC_CONFIGURATION, # Hata veren STUN ayarı buraya eklendi
     video_processor_factory=EmotionProcessor,
     media_stream_constraints={"video": True, "audio": False}, # Sadece görüntü
