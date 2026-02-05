@@ -29,8 +29,8 @@ def load_everything():
     return model, fa, device
 
 st.set_page_config(page_title="Faraş Duygu Analizi", layout="centered")
-st.title("🎭 Faraş Duygu Analizi (Live)")
-st.write("Ağ hatalarını aşmak için fotoğraf çekme moduna geçildi. Hadi, bir selfie patlat!")
+st.title(" Faraş Duygu Analizi ")
+st.write("Selfie Çek..")
 
 model, fa, device = load_everything()
 
