@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit_webrtc import webrtc_streamer, VideoProcessorBase
+from streamlit_webrtc import webrtc_streamer, VideoProcessorBase, RTCConfiguration
 import cv2
 import torch
 import numpy as np
@@ -7,15 +7,18 @@ from pathlib import Path
 import face_alignment
 from Model_architecture_Code import Block, ResNet
 
-# --- AYARLAR ---
+# --- GOOGLE STUN SUNUCULARI (Bağlantı Sorununu Çözen Kısım) ---
+RTC_CONFIGURATION = RTCConfiguration(
+    {"iceServers": [{"urls": ["stun:stun.l.google.com:19302", "stun:stun1.l.google.com:19302"]}]}
+)
+
 EMOTION_LABELS = ["kızgın maş", "Iıııı", "Korkmuş faşat", "Mutlu Bun", "Kederli Ferot", "Çok İlginçmişş"]
 WEIGHTS_PATH = Path("emotionDemo/Neconet_Weights3.pth")
 IMAGE_SIZE = (64, 64)
 
-# Modeli Önbelleğe Al (Hız için)
 @st.cache_resource
 def load_model():
-    device = torch.device("cpu") # Sunucuda CPU daha stabil
+    device = torch.device("cpu")
     model = ResNet(Block, [2, 2, 2, 2], len(EMOTION_LABELS))
     state = torch.load(WEIGHTS_PATH, map_location=device)
     if isinstance(state, dict) and "state_dict" in state:
@@ -34,10 +37,10 @@ fa = load_fa()
 class EmotionProcessor(VideoProcessorBase):
     def recv(self, frame):
         img = frame.to_ndarray(format="bgr24")
-        
-        # Senin işleme mantığın
         scale = 0.4
         detect_frame = cv2.resize(img, (0, 0), fx=scale, fy=scale)
+        
+        # Yüz bulma
         faces = fa.get_landmarks(detect_frame)
 
         if faces:
@@ -59,15 +62,22 @@ class EmotionProcessor(VideoProcessorBase):
                     probs = torch.softmax(logits, dim=1).squeeze().numpy()
                     label = EMOTION_LABELS[np.argmax(probs)]
                 
+                # Kareyi ve etiketi çiz
                 cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
                 cv2.putText(img, label, (x1, y1-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
 
         return frame.from_ndarray(img, format="bgr24")
 
-st.title("Duygu Analizi Demo 🚀")
-webrtc_streamer(key="emotion-demo", video_processor_factory=EmotionProcessor)
+st.title("Faraş Duygu Analizi")
+st.write("Start'a bas ve kameraya bak..")
 
-
-    
+webrtc_streamer(
+    key="emotion-live",
+    mode=None, # VideoProcessor modunu otomatik seçer
+    rtc_configuration=RTC_CONFIGURATION, # Hata veren STUN ayarı buraya eklendi
+    video_processor_factory=EmotionProcessor,
+    media_stream_constraints={"video": True, "audio": False}, # Sadece görüntü
+    async_processing=True,
+)
 
         
