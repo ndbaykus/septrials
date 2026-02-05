@@ -14,7 +14,7 @@ from torch import nn
 
 from Model_architecture_Code import Block, ResNet
 
-EMOTION_LABELS = ["Horny", "Disgust", "Fear", "Gooning", "Sadness", "Lowkey sliming charlie kirk"]
+EMOTION_LABELS = ["kızgın maş", "Iıııı", "Korkmuş faşat", "Mutlu Bun", "Kederli Ferot", "Çok İlginçmişş"]
 CLASS_ORDER = ["angry", "disgusted", "fearful", "happy", "sad", "surprised"]
 WEIGHTS_PATH = Path("C:\\Users\\Dell\\Desktop\\emotionDemo\\Neconet_Weights3.pth")
 IMAGE_SIZE = (64, 64)
