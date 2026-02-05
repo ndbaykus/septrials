@@ -1,8 +1,7 @@
 streamlit
+streamlit-webrtc
 torch
 torchvision
 opencv-python-headless
 face-alignment
 numpy<2.0
-matplotlib
-streamlit-webrtc
