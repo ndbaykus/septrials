@@ -3,4 +3,4 @@ torch
 torchvision
 opencv-python-headless
 face-alignment
-numpy
+numpy<2.0
